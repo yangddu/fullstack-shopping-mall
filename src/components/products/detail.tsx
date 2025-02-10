@@ -14,7 +14,6 @@ const ProductDetail = ({
         <div className="product-detail">
             <h2 className="product-detail__title">{title}</h2>    
             <p className="product-detail__description">{description}</p>
-            <p className="product-detail__title">{title}</p>
             <img className="product-detail__image" src={imageUrl} />
             <span className="product-detail__price">${price}</span>
         </div>
