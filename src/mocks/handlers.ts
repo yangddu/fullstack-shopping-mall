@@ -18,7 +18,7 @@ let mock_posts = Array.from({ length: 10 }).map((_, i) => {
         title: `요청상품${i+1}`,
         description: `요청내용${i+1}`,
         createdAt,
-        updatedAt: createdAt
+        updatedAt: ''
     }
 });
 
@@ -88,5 +88,44 @@ export const handlers = [
                   post
               })
           )
+      }),
+
+      graphql.mutation('CREATE_POST', (req, res, ctx) => {
+        const { title, description, imageUrl, price } = req.variables;
+        const newPost = {
+          id: mock_posts.length,
+          title,
+          description,
+          imageUrl: imageUrl || `https://picsum.photos/seed/${mock_posts.length}/200/150`,
+          price: price || 10000,
+          createdAt: new Date().toISOString(),
+          updatedAt: ''
+        };
+        mock_posts.push(newPost);
+        return res(
+          ctx.data({
+            post: newPost
+          })
+        )
+      }),
+
+      graphql.mutation('EDIT_POST', (req, res, ctx) => {
+        const { id, title, description, imageUrl, price } = req.variables;
+        const postIndex = mock_posts.findIndex((post) => post.id === Number(id));
+
+        mock_posts[postIndex] = {
+          ...mock_posts[postIndex],
+          title: title || mock_posts[postIndex].title,
+          description: description || mock_posts[postIndex].description,
+          imageUrl: imageUrl || mock_posts[postIndex].imageUrl,
+          price: price !== undefined ? price : mock_posts[postIndex].price,
+          updatedAt: new Date().toISOString(),
+        }
+        
+        return res(
+          ctx.data({
+            post: mock_posts[postIndex]
+          })
+        )
       })
   ];

@@ -17,7 +17,7 @@ const PostDetail = ({
             <p className="product-detail__description">{description}</p>
             <img className="product-detail__image" src={imageUrl}/>
             <span className="product-detail__price">생성일 : {createdAt}</span>
-            <span className="product-detail__price">수정일 : {updatedAt}</span>
+            <span className="product-detail__price">{ !!updatedAt && `수정일 :` + updatedAt }</span>
         </div>
     )
 }
