@@ -72,6 +72,20 @@ export const handlers = [
         )
       }),
 
+      graphql.mutation('UPDATE_CART', (req, res, ctx) => {
+        const newData = { ...cartData };
+        const { id, amount } = req.variables;
+        if (!newData[id]) { throw new Error ('없는 데이터입니다.') }
+        newData[id] = {
+          ...newData[id],
+          amount
+        }
+        cartData = newData
+        return res(
+          ctx.data(newData)
+        )
+      }),
+
       graphql.query('GET_POSTS', (req, res, ctx) => {
         return res(
             ctx.data({
@@ -127,5 +141,16 @@ export const handlers = [
             post: mock_posts[postIndex]
           })
         )
+      }),
+
+      graphql.mutation('DELETE_POST', (req, res, ctx) => {
+          const { id } = req.variables;
+          const postIndex = mock_posts.findIndex((post) => post.id === Number(id));
+
+          mock_posts.splice(postIndex, 1);
+
+          return res(
+              ctx.data({ success: true, message: "삭제되었습니다!"})
+          )
       })
   ];

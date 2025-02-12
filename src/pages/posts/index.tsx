@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { graphqlFetcher } from "../../queryClient.ts"
-import { GET_POSTS, POSTS, POST, CREATE_POST, EDIT_POST } from '../../components/graphql/posts.ts'
+import { POSTS, POST, GET_POSTS, CREATE_POST, EDIT_POST, DELETE_POST } from '../../components/graphql/posts.ts'
 import PostItem from "../../components/posts/item.tsx";
 import { useState } from "react";
 
@@ -56,6 +56,17 @@ const PostList = () => {
         }
     };
 
+    const deletePostMutation = useMutation({
+        mutationFn: (id: string) => graphqlFetcher(DELETE_POST, { id }),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['GET_POSTS'])
+        }
+    })
+
+    const deletePost = (id: string) => {
+        deletePostMutation.mutate(id);
+    }
+
     return (
         <div>
             <h2>문의 목록</h2>
@@ -98,6 +109,7 @@ const PostList = () => {
                                     <>
                                         <PostItem {...post} key={post.id}/>
                                         <button onClick={() => clickUpdated(post)}>수정</button>
+                                        <button onClick={() => deletePost(post.id)}>삭제</button>
                                     </>
                                 )}
                         </li>

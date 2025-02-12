@@ -1,5 +1,5 @@
 import { CART } from "../graphql/cart"
-import CartItem from "./cartItem"
+import CartItem from "./item"
 
 const CartList = ({ items }: { items: CART[] }) => {
     return (
