@@ -6,7 +6,9 @@ import CartList from "../../components/cart"
 const Cart = () => {
     const { data } = useQuery({
         queryKey: ['GET_CART'],
-        queryFn: () => graphqlFetcher(GET_CART)
+        queryFn: () => graphqlFetcher(GET_CART),
+        staleTime: 0,
+        cacheTime: 1000
     })
 
     const cartItems = Object.values(data || {}) as CART[];

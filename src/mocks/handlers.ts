@@ -48,27 +48,23 @@ export const handlers = [
       }),
 
       graphql.mutation('ADD_CART', (req, res, ctx) => {
-        const newData = { ...cartData };
+        const newCartData = { ...cartData };
         const id = req.variables.id;
-        if (cartData[id]) {
-            // 이미 장바구니에 있는 상품이면 개수 증가
-          newData[id] = {
-            ...newData[id],
-            amount: ( newData[id].amount || 0 )+ 1,
-          }
-        } else {
-            // 장바구니에 없는 상품이면 새로 추가
-          const found = mock_products.find(item => item.id === (req.variables.id));
-          if (found) {
-            newData[id] = {
-              ...found,
-              amount: 1,
-            }
-          }
+        const targetProduct = mock_products.find(item => item.id === (req.variables.id));
+
+        if (!targetProduct) { throw new Error('상품이 없습니다') }
+
+        const newItem = {
+          ...targetProduct,
+          amount: (newCartData[id]?.amount || 0) + 1
         }
-        cartData = newData
+        // console.log(newItem)
+        console.log(newCartData)
+        newCartData[id] = newItem
+        cartData = newCartData
+
         return res(
-          ctx.data(newData)
+          ctx.data(newItem)
         )
       }),
 
@@ -76,13 +72,15 @@ export const handlers = [
         const newData = { ...cartData };
         const { id, amount } = req.variables;
         if (!newData[id]) { throw new Error ('없는 데이터입니다.') }
-        newData[id] = {
+        
+        const newItem = {
           ...newData[id],
-          amount
+          amount,
         }
+        newData[id] = newItem
         cartData = newData
         return res(
-          ctx.data(newData)
+          ctx.data(newItem)
         )
       }),
 
