@@ -84,6 +84,16 @@ export const handlers = [
         )
       }),
 
+      graphql.mutation('DELETE_CART', (req, res, ctx) => {
+        const newData = { ...cartData };
+        const { id } = req.variables;
+        delete newData[id];
+        cartData = newData;
+        return res(
+          ctx.data({ success: true, message: "삭제되었습니다!"})
+        )
+      }),
+
       graphql.query('GET_POSTS', (req, res, ctx) => {
         return res(
             ctx.data({
