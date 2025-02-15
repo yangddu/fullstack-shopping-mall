@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { CART, DELETE_CART, UPDATE_CART } from "../graphql/cart";
 import { getClient, graphqlFetcher } from "../../queryClient";
 import { ForwardedRef, forwardRef, SyntheticEvent } from "react";
+import ItemData from "./itemData";
 
 const CartItem = ({
     id,
@@ -54,9 +55,7 @@ const CartItem = ({
     return (
         <li className="cart-item">
             <input type="checkbox" className="cart-item__checkbox" name="select-item" ref={ref}/>
-            <img src={imageUrl} />
-            <div className="cart-item__title">{title}</div>
-            <div className="cart-item__title">{price}</div>
+            <ItemData imageUrl={imageUrl} price={price} title={title}/>
             <input type="number" value={amount} min={1} onChange={handleUpdateCart}/>
             <button type="button" className="cart-item__button" onClick={handleDeleteItem}>삭제</button>
         </li>
