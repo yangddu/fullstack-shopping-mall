@@ -13,7 +13,7 @@ const Pay = () => {
 
     const handleSubmit = () => {
         if (checkedItems.length) {
-            navigate('/payment', )
+            navigate('/payment')
         } else {
             alert('결제할 대상이 없어요')
         }
@@ -24,7 +24,7 @@ const Pay = () => {
             <ul>
                 {checkedItems.map(({ imageUrl, price, title, amount, id}) => (
                     <li key={id}>
-                        <ItemData imageUrl={imageUrl} title={title} price={price}/>
+                        <ItemData imageUrl={imageUrl} title={title} price={price} amount={amount}/>
                         <p>수량 : {amount}</p>
                         <p>금액: {price * amount}</p>
                     </li>

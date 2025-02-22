@@ -1,4 +1,4 @@
-import { createRef, SyntheticEvent, useEffect, useRef, useState } from "react"
+import { createRef, SyntheticEvent, useEffect, useRef, useState, useCallback } from "react"
 import { CART } from "../graphql/cart"
 import CartItem from "./item"
 import { checkedCartState } from "../../recoils/cart"
@@ -39,13 +39,23 @@ const CartList = ({ items }: { items: CART[] }) => {
         setFormData(data)
     }
 
-    useEffect(() => {
-        checkedCartData.forEach(item => {
-            const itemRef = checkBoxRefs.find(ref => ref.current!.dataset.id === item.id)
-            if (itemRef) itemRef.current!.checked = true
+    const restoreCheckedItems = useCallback(() => {
+        checkBoxRefs.forEach((ref, i) => {
+            if (!ref.current) return
+            const isChecked = checkedCartData.some(item => item.id === items[i].id)
+            ref.current.checked = isChecked
         })
-        setAllCheckedFormItems()
-    }, [])
+        
+        // 전체선택 체크박스 상태 업데이트
+        if (formRef.current) {
+            const allChecked = checkedCartData.length === items.length
+            formRef.current.querySelector<HTMLInputElement>('.select-all')!.checked = allChecked
+        }
+    }, [checkedCartData, items])
+
+    useEffect(() => {
+        restoreCheckedItems()
+    }, [restoreCheckedItems])
 
     useEffect(() => {
         const checkedItems = checkBoxRefs.reduce<CART[]>((res, ref, i) => {
