@@ -3,9 +3,11 @@ import { CART } from "../graphql/cart"
 import CartItem from "./item"
 import { checkedCartState } from "../../recoils/cart"
 import { useRecoilState } from "recoil"
-import Pay from "./pay"
+import Pay from "../pay"
+import { useNavigate } from "react-router-dom"
 
 const CartList = ({ items }: { items: CART[] }) => {
+    const navigate = useNavigate(); 
     const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState)
     const formRef = useRef<HTMLFormElement>(null)
     const checkBoxRefs = items.map(() => createRef<HTMLInputElement>())
@@ -46,12 +48,19 @@ const CartList = ({ items }: { items: CART[] }) => {
             ref.current.checked = isChecked
         })
         
-        // 전체선택 체크박스 상태 업데이트
         if (formRef.current) {
             const allChecked = checkedCartData.length === items.length
             formRef.current.querySelector<HTMLInputElement>('.select-all')!.checked = allChecked
         }
     }, [checkedCartData, items])
+
+    const handleSubmit = () => {
+        if (checkedCartData.length) {
+            navigate('/payment')
+        } else {
+            alert('결제할 대상이 없어요')
+        }
+    }
 
     useEffect(() => {
         restoreCheckedItems()
@@ -78,7 +87,7 @@ const CartList = ({ items }: { items: CART[] }) => {
                 }
             </ul>
         </form>
-        <Pay />
+        <Pay submitTitle="결제창으로" handleSubmit={handleSubmit}/>
         </div>
     )
 }

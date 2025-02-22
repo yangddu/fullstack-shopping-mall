@@ -1,4 +1,5 @@
 import { graphql } from 'msw';
+import { EXCUTE_PAY } from '../components/graphql/payment';
 
 const mock_products = Array.from({ length: 20 }).map((_, i) => ({
     id: i,
@@ -160,5 +161,12 @@ export const handlers = [
           return res(
               ctx.data({ success: true, message: "삭제되었습니다!"})
           )
+      }),
+
+      graphql.mutation(EXCUTE_PAY, (req, res, ctx) => {
+        cartData = {}
+        return res(
+          ctx.data({ success: true })
+        )
       })
   ];
