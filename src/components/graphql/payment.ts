@@ -1,12 +1,8 @@
-import { gql } from "graphql-request";
+import { gql } from "graphql-tag";
 
 
 export const EXCUTE_PAY = gql`
-    type PayInfo {
-        id: string
-        amount: number
-    }
-    mutation EXCUTE_PAY($info: [PayInfo]) {
+    mutation EXCUTE_PAY($info: [String!]) {
         payInfo(info: $info)
     }
 `

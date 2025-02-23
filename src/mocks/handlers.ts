@@ -3,7 +3,7 @@ import { EXCUTE_PAY } from '../components/graphql/payment';
 
 const mock_products = Array.from({ length: 20 }).map((_, i) => ({
     id: i,
-    imageUrl: `https://picsum.photos/id/${i}/200/150`,
+    imageUrl: `https://picsum.photos/id/${i + 10}/200/150`,
     price: 50000,
     title: `임시상품${i+1}`,
     description: `임시상세내용${i+1}`,
@@ -163,10 +163,12 @@ export const handlers = [
           )
       }),
 
-      graphql.mutation(EXCUTE_PAY, (req, res, ctx) => {
-        cartData = {}
+      graphql.mutation(EXCUTE_PAY, ({ variables: ids }, res, ctx) => {
+        ids.forEach((id: string) => {
+          delete cartData[id]
+        });
         return res(
-          ctx.data({ success: true })
+          ctx.data(ids)
         )
       })
   ];
