@@ -1,8 +1,9 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import schema from './schema';
 
 (async () => {
-const server = new ApolloServer({})
+const server = new ApolloServer({ });
 
 const app = express();
 await server.start();
