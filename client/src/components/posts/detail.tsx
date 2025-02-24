@@ -1,4 +1,4 @@
-import { POST } from '../../components/graphql/posts.ts';
+import { POST } from '../graphql/posts.ts';
 
 const PostDetail = ({
     item: {

@@ -1,6 +1,6 @@
 import PostDetail from "../../components/posts/detail.tsx";
 import { useQuery } from "@tanstack/react-query"
-import { graphqlFetcher } from "../../queryClient"
+import { graphqlFetcher } from "../../queryClient.ts"
 import { useParams } from "react-router-dom"
 import { GET_POST, POST } from '../../components/graphql/posts.ts';
 

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './app.tsx'
 import './scss/index.scss'
 import { BrowserRouter } from 'react-router-dom'
-import { worker } from'./mocks/browser'
+import { worker } from'./mocks/browser.ts'
 import { RecoilRoot } from 'recoil';
 
 if (import.meta.env.DEV) {

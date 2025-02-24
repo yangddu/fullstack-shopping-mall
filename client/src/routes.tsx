@@ -1,11 +1,11 @@
-import GlobalLayout from "../src/pages/_layout";
-import Index from "../src/pages/index";
-import CartIndex from "../src/pages/cart/index";
-import PaymentIndex from "../src/pages/payment/index";
-import ProductsIndex from "../src/pages/products/index";
-import ProductsId from "../src/pages/products/[id]";
-import PostsIndex from '../src/pages/posts/index';
-import PostsId from '../src/pages/posts/[id]';
+import GlobalLayout from "./pages/_layout";
+import Index from "./pages/index";
+import CartIndex from "./pages/cart/index";
+import PaymentIndex from "./pages/payment/index";
+import ProductsIndex from "./pages/products/index";
+import ProductsId from "./pages/products/[id]";
+import PostsIndex from './pages/posts/index';
+import PostsId from './pages/posts/[id]';
 
 export const routes = [
   {
